@@ -8,7 +8,6 @@
     <script type="text/javascript" src="./node_modules/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="./node_modules/angular/angular.min.js"></script>
     <script type="text/javascript" src="./node_modules/angular-dynamic-locale/tmhDynamicLocale.min.js"></script>
-    
     <script type="text/javascript">
       
       var app = angular.module('myApp', ['tmh.dynamicLocale']);
@@ -40,7 +39,8 @@
   </head>
   <body ng-controller="appCtrl">
     
-    <div class="page">
+    <div id="Page" class="page">
+      
       <nav>
         <ul class="nav-list flex">
           <li class="nav-list__item--current"><a href="" ng-click="switchLang('en', $event)">EN</a>
@@ -72,6 +72,7 @@
             <li>Negative number: {{-val | number:4}}</li>
         </ul>
       </section>
+      
     </div>
     
   </body>
