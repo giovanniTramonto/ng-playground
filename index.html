@@ -1,0 +1,77 @@
+<html ng-app="myApp" >
+  <head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link href="assets/css/style.css" rel="stylesheet" />
+    
+    <script type="text/javascript" src="./node_modules/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="./node_modules/angular/angular.min.js"></script>
+    <script type="text/javascript" src="./node_modules/angular-dynamic-locale/tmhDynamicLocale.min.js"></script>
+    <script type="text/javascript">
+      
+      var app = angular.module('myApp', ['tmh.dynamicLocale']);
+      
+      app.config(function( tmhDynamicLocaleProvider ) {
+        tmhDynamicLocaleProvider.localeLocationPattern( './node_modules/angular-i18n/angular-locale_{{locale}}.js' );  
+      });
+      
+      app.controller('appCtrl', function($scope, $locale, tmhDynamicLocale ){
+        
+        var dateString = "2014-07-15";
+        $scope.myDate = new Date( dateString );
+        $scope.val = 1234.56789;
+        
+        $scope.switchLang = function ( lang , $event ) {
+          tmhDynamicLocale.set( lang );
+          $scope.setCurrent( $event.target );
+        }
+        
+        $scope.setCurrent = function ( target ) {
+          $('.nav-list > li').removeClass('nav-list__item--current');
+          $( target ).parent().addClass('nav-list__item--current');
+        }
+        
+      });
+      
+    </script>
+    
+  </head>
+  <body ng-controller="appCtrl">
+    
+    <div class="page">
+      <nav>
+        <ul class="nav-list flex">
+          <li class="nav-list__item--current"><a href="" ng-click="switchLang('en', $event)">EN</a>
+          <li><a href="" ng-click="switchLang('de', $event)">DE</a>
+        </ul>
+      </nav>
+      
+      <section>
+        
+        <h2>Change Entities by Language</h2>
+        
+        <h3>Dates</h3>
+        <ul>
+            <li>{{ myDate | date:"dd. MMMM yyyy" }}</li>
+        </ul>
+        
+        <h3>Currencies</h3>
+        <ul>
+            <li>{{ 10376.9366 | currency }}</li>
+        </ul>
+        
+        <h3>Numbers</h3>
+        <label>
+            Enter number: <input ng-model='val'>
+        </label>
+        <ul>
+            <li>Default formatting: {{val | number}}</li>
+            <li>No fractions: {{val | number:0}}</li>
+            <li>Negative number: {{-val | number:4}}</li>
+        </ul>
+      </section>
+    </div>
+    
+  </body>
+</html>
